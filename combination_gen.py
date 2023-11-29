@@ -1,5 +1,6 @@
 import copy, csv
-from data_processing import DB, Table
+from data_processing import Table
+
 
 def gen_comb_list(list_set):
     if len(list_set) == 1:
@@ -23,8 +24,23 @@ with open('movies.csv', 'r') as file:
     for row in table_reader:
         movies.append(row)
 
-
 movies_table = Table('movies', movies)
+
+
+count = 0
+gross_total = 0
+for movie in movies_table.table:
+    if movie['Genre'] == 'Comedy':
+        count += 1
+        gross_total += float(movie['Worldwide Gross'])
+print(gross_total/count)
+
+count = 0
+audience = []
+for movie in movies_table.table:
+    if movie['Genre'] == 'Drama':
+        audience.append(float(movie['Audience score %']))
+print(min(audience))
 
 count = 0
 for movie in movies_table.table:
@@ -51,20 +67,19 @@ for movie in movies_table.table:
         count += 1
 print(count)
 
+print(movies_table.table[3])
 movies_table.update_row('Film', 'A Serious Man', 'Year', '2022')
 print(movies_table.table[3])
 
-
-
-
-# print("Test gen_comb_list")
-# x = [1, 2, 3]
-# y = [4, 5]
-# z = [6, 7, 8]
-# u = [9, 10]
-# comb_list = gen_comb_list([x]) 
-# print(comb_list, len(comb_list), [x])
-# comb_list = gen_comb_list([x, y])
-# print(comb_list, len(comb_list), [x, y])
-# comb_list = gen_comb_list([x, y, z])
-# print(comb_list, len(comb_list), [x, y, z])
+print()
+print("Test gen_comb_list")
+x = [1, 2, 3]
+y = [4, 5]
+z = [6, 7, 8]
+u = [9, 10]
+comb_list = gen_comb_list([x])
+print(comb_list, len(comb_list), [x])
+comb_list = gen_comb_list([x, y])
+print(comb_list, len(comb_list), [x, y])
+comb_list = gen_comb_list([x, y, z])
+print(comb_list, len(comb_list), [x, y, z])
