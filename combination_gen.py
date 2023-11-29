@@ -18,15 +18,16 @@ def gen_comb_list(list_set):
     return start_list
 
 
+# initializing movies table
 movies = []
 with open('movies.csv', 'r') as file:
     table_reader = csv.DictReader(file)
     for row in table_reader:
         movies.append(row)
-
 movies_table = Table('movies', movies)
 
 
+# find average worldwide gross
 count = 0
 gross_total = 0
 for movie in movies_table.table:
@@ -35,6 +36,8 @@ for movie in movies_table.table:
         gross_total += float(movie['Worldwide Gross'])
 print(gross_total/count)
 
+
+# finding minimum audience score
 count = 0
 audience = []
 for movie in movies_table.table:
@@ -42,6 +45,8 @@ for movie in movies_table.table:
         audience.append(float(movie['Audience score %']))
 print(min(audience))
 
+
+# adding fantasy movie
 count = 0
 for movie in movies_table.table:
     if movie['Genre'] == 'Fantasy':
@@ -67,9 +72,12 @@ for movie in movies_table.table:
         count += 1
 print(count)
 
+
+# updating movie year
 print(movies_table.table[3])
 movies_table.update_row('Film', 'A Serious Man', 'Year', '2022')
 print(movies_table.table[3])
+
 
 print()
 print("Test gen_comb_list")
