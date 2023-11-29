@@ -21,7 +21,15 @@ class Table:
     def __init__(self, table_name, table):
         self.table_name = table_name
         self.table = table
-    
+
+    def insert_row(self, dict):
+        self.table.append(dict)
+
+    def update_row(self, primary_attribute, primary_attribute_value, update_attribute, update_value):
+        for row in self.table:
+            if row.get(primary_attribute) == primary_attribute_value:
+                row[update_attribute] = update_value
+
     def join(self, other_table, common_key):
         joined_table = Table(self.table_name + '_joins_' + other_table.table_name, [])
         for item1 in self.table:

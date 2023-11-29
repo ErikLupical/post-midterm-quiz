@@ -1,4 +1,5 @@
-import copy
+import copy, csv
+from data_processing import DB, Table
 
 def gen_comb_list(list_set):
     if len(list_set) == 1:
@@ -14,6 +15,47 @@ def gen_comb_list(list_set):
             temp_item.append(val)
             start_list.append(temp_item)
     return start_list
+
+
+movies = []
+with open('movies.csv', 'r') as file:
+    table_reader = csv.DictReader(file)
+    for row in table_reader:
+        movies.append(row)
+
+
+movies_table = Table('movies', movies)
+
+count = 0
+for movie in movies_table.table:
+    if movie['Genre'] == 'Fantasy':
+        count += 1
+print(count)
+
+dict = {}
+dict['Film'] = 'The Shape of Water'
+dict['Genre'] = 'Fantasy'
+dict['Lead Studio'] = 'Fox'
+dict['Audience score %'] = '72'
+dict['Profitability'] = '9.765'
+dict['Rotten Tomatoes %'] = '92'
+dict['Worldwide Gross'] = '195.3'
+dict['Year'] = '2017'
+print(dict)
+
+movies_table.insert_row(dict)
+
+count = 0
+for movie in movies_table.table:
+    if movie['Genre'] == 'Fantasy':
+        count += 1
+print(count)
+
+movies_table.update_row('Film', 'A Serious Man', 'Year', '2022')
+print(movies_table.table[3])
+
+
+
 
 # print("Test gen_comb_list")
 # x = [1, 2, 3]
